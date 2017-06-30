@@ -89,7 +89,7 @@ void dosyaCompare(QString fPath1, QString fPath2)
         fileNameList1<<filename;
         fileSizeList1.push_back(fileInfo.size());
 
-//        qDebug()<<"1.--"<<d<<"--"<<filename<<"--"<<fileInfo.size();
+//        qDebug()<<"1."<<d<<"--"<<filename<<"--"<<fileInfo.size();
     }
 
     foreach (const QString &d, fList2)
@@ -104,7 +104,6 @@ void dosyaCompare(QString fPath1, QString fPath2)
 //        qDebug()<<"2."<<d<<"--"<<filename<<"--"<<fileInfo.size();
     }
 
-    bool a1=false,a2=false;
     for(int i=0;i<fList1.length();i++)
     {
         for(int j=0;j<fList2.length();j++)
@@ -112,19 +111,7 @@ void dosyaCompare(QString fPath1, QString fPath2)
             if(dosyaKontrol(fileNameList1[i],fileSizeList1[i],fileNameList2[j],fileSizeList2[j]))
             {
                 qDebug()<<fList1[i]<<"==="<<fList2[j];
-                a1=true;
-                a2=true;
             }
-            if(!a2)
-            {
-                qDebug()<<fList2[j];
-                a2=false;
-            }
-        }
-        if(!a1)
-        {
-            qDebug()<<fList1[i];
-            a1=false;
         }
     }
 
@@ -134,10 +121,12 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    QString fPath1="C:\\Users\\ibrahimethem\\Documents\\qtProject";
-    QString fPath2="C:\\Users\\ibrahimethem\\Desktop\\sil\\QtDirTree";
+//    C:\Users\ibrahimethem\Documents\qtProject\QtDirTree
 
-    dosyaCompare(fPath2,fPath1);
+    QString fPath1="C:\\Users\\ibrahimethem\\Documents\\qtProject\\QtDirTree";
+    QString fPath2="C:\\Users\\ibrahimethem\\Documents\\qtProject";
+
+    dosyaCompare(fPath1,fPath2);
 
 
     //    return a.exec();
