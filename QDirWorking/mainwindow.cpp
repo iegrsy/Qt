@@ -5,6 +5,8 @@
 #include <QStringListModel>
 #include <QHash>
 #include <QListWidget>
+#include <QCryptographicHash>
+
 
 static void listFiles(QString folder, QStringList &list)
 {
@@ -27,6 +29,8 @@ static bool fileCompare(QString fp1,QString fp2)
     QFileInfo fi1(f1.fileName()),fi2(f2.fileName());
     QString filename1(fi1.fileName()),filename2(fi2.fileName());
     QByteArray file1Bayt,file2Bayt;
+
+//    QString blah1 = QString(QCryptographicHash::hash(("myPassword"),QCryptographicHash::Md5).toHex());
 
     if(f1.open(QIODevice::ReadOnly)){
         file1Bayt=f1.readAll();
