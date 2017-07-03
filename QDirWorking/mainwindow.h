@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QListWidget>
+#include <QString>
+#include <QStringList>
 
 namespace Ui {
 class MainWindow;
@@ -14,8 +17,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void listele1();
-    void listele2();
+    void listele(QListWidget *lw,QString &url, QStringList &myList);
+    void yolYolla(QListWidget* lw, QString &url, QStringList &list );
 
 private:
     Ui::MainWindow *ui;
@@ -24,9 +27,9 @@ private:
     QStringList dl1,dl2,dl;
 
 public slots:
-    void yolYolla1();
-    void yolYolla2();
     void karsilastirDir();
+    void btnPress();
+
 };
 
 #endif // MAINWINDOW_H
