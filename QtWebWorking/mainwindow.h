@@ -32,6 +32,7 @@ public:
     void writeFile(QString path,QString text);
     void parseXml();
 
+    void listele();
 private:
     Ui::MainWindow *ui;
 

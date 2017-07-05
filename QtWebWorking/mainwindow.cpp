@@ -13,6 +13,16 @@
 #include <QTextStream>
 #include <QList>
 
+QString static myStringFormating(QString text,qint16 size){
+
+    qint16 a=size-text.size();
+
+    for(int i=0;i<a;i++)
+        text.append("-");
+
+    return text;
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -56,6 +66,19 @@ void MainWindow::writeFile(QString path,QString text){
 
 void MainWindow::mySlot(){
     parseXml();
+
+    listele();
+}
+
+void MainWindow::listele(){
+
+    ui->lwAd->clear();
+
+    foreach (doviz d, dovizList) {
+
+        ui->lwAd->addItem(QString("%1%2").arg(d.name.trimmed(),-30).arg(d.value.trimmed()));
+        qDebug()<<QString("%1%2").arg(myStringFormating(d.name.trimmed(),30)).arg(d.value.trimmed());
+    }
 }
 
 void MainWindow::parseXml(){
