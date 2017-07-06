@@ -1,0 +1,78 @@
+{
+    "categories": [
+        {
+            "cat_id": "cat01",
+            "name": "Fonksiyonellik Testleri",
+            "subcategories": [
+                {
+                    "cat_id": "cat0101",
+                    "name": "Donanım Testleri"
+                },
+                {
+                    "cat_id": "cat0102",
+                    "name": "Uygulama Testleri",
+                    "subcategories": [
+                        {
+                            "cat_id": "cat010201",
+                            "name": "Vksystem Testleri"
+                        },
+                        {
+                            "cat_id": "cat010202",
+                            "name": "Streamer Testleri"
+                        },
+                        {
+                            "cat_id": "cat010203",
+                            "name": "Sistem Testleri"
+                        }
+                    ]
+                },
+                {
+                    "cat_id": "cat0103",
+                    "name": "Sistem Testleri"
+                }
+            ]
+        },
+        {
+            "cat_id": "cat02",
+            "name": "Performans Testleri",
+            "subcategories": [
+                {
+                    "cat_id": "cat0201",
+                    "name": "Donanım Testleri",
+                    "subcategories": [
+                        {
+                            "cat_id": "cat020101",
+                            "name": "Ethernet Testleri"
+                        },
+                        {
+                            "cat_id": "cat020102",
+                            "name": "Depolama Testleri"
+                        },
+                        {
+                            "cat_id": "cat020103",
+                            "name": "CPU Testleri"
+                        }
+                    ]
+                },
+                {
+                    "cat_id": "cat0202",
+                    "name": "Uygulama Testleri",
+                    "subcategories": [
+                        {
+                            "cat_id": "cat020201",
+                            "name": "Vksystem Testleri"
+                        },
+                        {
+                            "cat_id": "cat020202",
+                            "name": "Streamer Testleri"
+                        },
+                        {
+                            "cat_id": "cat020203",
+                            "name": "Sistem Testleri"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
