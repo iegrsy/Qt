@@ -26,8 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->pushButton,SIGNAL(clicked(bool)),this,SLOT(myBtnSlot()));
     connect(ui->treeWidget,SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(updateChecks(QTreeWidgetItem*,int)));
-
     ui->treeWidget->setHeaderLabel("Categories");
+
 
     QString jFilePath="C:\\Users\\ibrahimethem\\Desktop\\testdefs.json";
     QFile jFile(jFilePath);
@@ -266,7 +266,7 @@ void MainWindow::updateChecks(QTreeWidgetItem *item, int column)
     if(item->childCount()!=0 && item->checkState(0)!=Qt::PartiallyChecked && column!=-1){
         Qt::CheckState checkState = item->checkState(0);
         for (int i = 0; i < item->childCount(); ++i) {
-           item->child(i)->setCheckState(0, checkState);
+            item->child(i)->setCheckState(0, checkState);
         }
     } else if (item->childCount()==0 || column==-1) {
         if(item->parent()==0)

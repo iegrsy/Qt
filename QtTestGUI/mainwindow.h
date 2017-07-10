@@ -23,6 +23,8 @@ public:
     void jFileParse(QString jFile);
     QMap<QString, QString> currentPageMap();
     QStringList testControl(QString testID, QMap<int, QMap<QString, QString> > testMap);
+
+
 public slots:
 
     void myBtnSlot();
