@@ -49,13 +49,13 @@ void MainWindow::jFileParse(QString jFile){
         QJsonArray jTestsArray =jObject["tests"].toArray();
 
         QTreeWidgetItem *categories;
-//        QBrush colorYellow( Qt::yellow );
-//        QBrush colorGreen( Qt::green );
-//        QBrush colorWhite(Qt::white);
-//        QBrush colorRed(Qt::red);
+        //        QBrush colorYellow( Qt::yellow );
+        //        QBrush colorGreen( Qt::green );
+        //        QBrush colorWhite(Qt::white);
+        //        QBrush colorRed(Qt::red);
 
         //Tests mapping
-        QMap< int, QMap< QString, QString> > testMultimap;
+
         int iterCount=0;
         foreach (const QJsonValue & value, jTestsArray) {
             QJsonObject obj=value.toObject();
@@ -63,7 +63,7 @@ void MainWindow::jFileParse(QString jFile){
             a.insert(obj["cat_id"].toString(),obj["name"].toString());
             testMultimap.insert(iterCount,a); iterCount++;
 
-            //            qDebug()<<"mapping: "<<obj["cat_id"].toString()<<"--"<<obj["name"].toString();
+            //qDebug()<<"mapping: "<<obj["cat_id"].toString()<<"--"<<obj["name"].toString();
         }
 
         QMapIterator<int, QMap<QString,QString>> iter(testMultimap);
@@ -90,22 +90,22 @@ void MainWindow::jFileParse(QString jFile){
                         QTreeWidgetItem *tests =new QTreeWidgetItem(categories);
                         tests->setText(0,a);
                         tests->setIcon(0,QIcon(":/testler.png"));
-                        tests->setCheckState(0, Qt::Checked);
-//                        tests->setBackground(0,colorRed);
+                        tests->setCheckState(0, Qt::Unchecked);
+                        //                        tests->setBackground(0,colorRed);
                     }
 
                 }
 
                 if(obj["obligation"].toString().compare("compulsory")){
                     categories->setIcon(0,QIcon(":/zorunlu.png"));
-                    categories->setCheckState(0, Qt::Checked);
-//                    categories->setBackground(0,colorGreen);
+                    categories->setCheckState(0, Qt::Unchecked);
+                    //                    categories->setBackground(0,colorGreen);
                 }else if(obj["obligation"].toString().compare("optional")) {
                     categories->setIcon(0,QIcon(":/secmeli.png"));
                     categories->setCheckState(0, Qt::Unchecked);
-//                    categories->setBackground(0,colorYellow);
+                    //                    categories->setBackground(0,colorYellow);
                 }else{
-//                    categories->setBackground(0,colorWhite);
+                    //                    categories->setBackground(0,colorWhite);
                 }
             }
             if(!obj["subcategories"].toArray().isEmpty()){
@@ -125,8 +125,8 @@ void MainWindow::jFileParse(QString jFile){
                                 QTreeWidgetItem *tests =new QTreeWidgetItem(subcategories);
                                 tests->setText(0,a);
                                 tests->setIcon(0,QIcon(":/testler.png"));
-                                tests->setCheckState(0, Qt::Checked);
-//                                tests->setBackground(0,colorRed);
+                                tests->setCheckState(0, Qt::Unchecked);
+                                //                                tests->setBackground(0,colorRed);
 
                             }
                         }
@@ -134,15 +134,15 @@ void MainWindow::jFileParse(QString jFile){
 
                         if(obj["obligation"].toString().compare("compulsory")){
                             subcategories->setIcon(0,QIcon(":/zorunlu.png"));
-                            subcategories->setCheckState(0, Qt::Checked);
-//                            subcategories->setBackground(0,colorGreen);
+                            subcategories->setCheckState(0, Qt::Unchecked);
+                            //                            subcategories->setBackground(0,colorGreen);
 
                         }else if(obj["obligation"].toString().compare("optional")) {
                             subcategories->setIcon(0,QIcon(":/secmeli.png"));
                             subcategories->setCheckState(0, Qt::Unchecked);
-//                            subcategories->setBackground(0,colorYellow);
+                            //                            subcategories->setBackground(0,colorYellow);
                         }else{
-//                            subcategories->setBackground(0,colorWhite);
+                            //                            subcategories->setBackground(0,colorWhite);
                         }
                     }
                     if(!obj["subcategories"].toArray().isEmpty()){
@@ -162,22 +162,22 @@ void MainWindow::jFileParse(QString jFile){
                                         QTreeWidgetItem *tests =new QTreeWidgetItem(subcategories1);
                                         tests->setText(0,a);
                                         tests->setIcon(0,QIcon(":/testler.png"));
-                                        tests->setCheckState(0, Qt::Checked);
-//                                        tests->setBackground(0,colorRed);
+                                        tests->setCheckState(0, Qt::Unchecked);
+                                        //                                        tests->setBackground(0,colorRed);
                                     }
                                 }
 
                                 if(obj["obligation"].toString().compare("compulsory")){
                                     subcategories1->setIcon(0,QIcon(":/zorunlu.png"));
-                                    subcategories1->setCheckState(0, Qt::Checked);
-//                                    subcategories1->setBackground(0,colorGreen);
+                                    subcategories1->setCheckState(0, Qt::Unchecked);
+                                    //                                    subcategories1->setBackground(0,colorGreen);
 
                                 }else if(obj["obligation"].toString().compare("optional")) {
                                     subcategories1->setIcon(0,QIcon(":/secmeli.png"));
                                     subcategories1->setCheckState(0, Qt::Unchecked);
-//                                    subcategories1->setBackground(0,colorYellow);
+                                    //                                    subcategories1->setBackground(0,colorYellow);
                                 }else{
-//                                    subcategories1->setBackground(0,colorWhite);
+                                    //                                    subcategories1->setBackground(0,colorWhite);
                                 }
                             }
                         }
@@ -213,6 +213,24 @@ QStringList MainWindow::testControl(QString testID,QMap<int,QMap<QString,QString
     return result;
 }
 
+bool MainWindow::testControl1(QString testName,QMap<int,QMap<QString,QString>> testMap){
+
+    bool result=false;
+
+    QMapIterator<int, QMap<QString,QString>> iter(testMap);
+    while(iter.hasNext())
+    {
+        iter.next();
+        QMapIterator<QString,QString> iter1(iter.value());
+        iter1.next();
+
+        if(testName.compare(iter1.value())==0){
+            result =true;
+        }
+    }
+    return result;
+}
+
 QMap<QString, QString> MainWindow::currentPageMap()
 {
     QMap<QString, QString> pageMap;
@@ -223,27 +241,31 @@ QMap<QString, QString> MainWindow::currentPageMap()
 
         if (checkItem->checkState(0) == Qt::Checked) {
             //            qDebug()<<checkItem->text(0);
-            checkItemList<<checkItem->text(0);
+            if(testControl1(checkItem->text(0),testMultimap))
+                checkItemList<<checkItem->text(0);
         }
 
         for (int childRow = 0; childRow < checkItem->childCount(); ++childRow) {
             QTreeWidgetItem *subCheckItem = checkItem->child(childRow);
             if (subCheckItem->checkState(0) == Qt::Checked){
                 //                qDebug()<<subCheckItem->text(0);
-                checkItemList<<subCheckItem->text(0);
+                if(testControl1(subCheckItem->text(0),testMultimap))
+                    checkItemList<<subCheckItem->text(0);
             }
 
             for (int childRow = 0; childRow < subCheckItem->childCount(); ++childRow) {
                 QTreeWidgetItem *subCheckItem1 = subCheckItem->child(childRow);
                 if (subCheckItem1->checkState(0) == Qt::Checked){
                     //                    qDebug()<<subCheckItem1->text(0);
-                    checkItemList<<subCheckItem1->text(0);
+                    if(testControl1(subCheckItem1->text(0),testMultimap))
+                        checkItemList<<subCheckItem1->text(0);
                 }
                 for (int childRow = 0; childRow < subCheckItem1->childCount(); ++childRow) {
                     QTreeWidgetItem *subCheckItem2 = subCheckItem1->child(childRow);
                     if (subCheckItem2->checkState(0) == Qt::Checked){
                         //                    qDebug()<<subCheckItem2->text(0);
-                        checkItemList<<subCheckItem2->text(0);
+                        if(testControl1(subCheckItem2->text(0),testMultimap))
+                            checkItemList<<subCheckItem2->text(0);
                     }
                 }
             }
