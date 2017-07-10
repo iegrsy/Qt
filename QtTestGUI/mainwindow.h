@@ -5,6 +5,9 @@
 #include <QModelIndexList>
 #include <QTreeWidgetItem>
 #include <QList>
+#include <QIcon>
+#include <QPixmap>
+
 
 typedef QList<QTreeWidgetItem *> StyleItems;
 

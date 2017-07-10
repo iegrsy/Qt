@@ -4,9 +4,9 @@
         <file>branch-end.png</file>
         <file>branch-more.png</file>
         <file>branch-open.png</file>
-        <file>false.png</file>
-        <file>test.png</file>
-        <file>true.png</file>
         <file>vline.png</file>
+        <file>secmeli.png</file>
+        <file>testler.png</file>
+        <file>zorunlu.png</file>
     </qresource>
 </RCC>
