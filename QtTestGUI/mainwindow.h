@@ -30,6 +30,7 @@ public:
 
 
     bool testControl1(QString testName, QMap<int, QMap<QString, QString> > testMap);
+    void jsonParseFonk(QString data);
 public slots:
 
     void myBtnSlot();

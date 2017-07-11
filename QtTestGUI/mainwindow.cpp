@@ -29,15 +29,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->treeWidget->setHeaderLabel("Categories");
 
 
-    QString jFilePath="C:\\Users\\ibrahimethem\\Desktop\\testdefs.json";
+    QString jFilePath="C:\\Users\\ibrahimethem\\Desktop\\cats.json";
     QFile jFile(jFilePath);
-    if(jFile.open(QIODevice::ReadOnly)){
-        jFileParse(QString(jFile.readAll()));
+    if(!jFile.open(QIODevice::ReadOnly)){
 
-        currentPageMap();
-    }else{
-        qDebug()<<"File can not open.";
+        return;
     }
+    QString data = jFile.readAll().data();
+
+    jsonParseFonk(data);
+    currentPageMap();
+    jFile.close();
 }
 
 void MainWindow::jFileParse(QString jFile){
@@ -72,7 +74,7 @@ void MainWindow::jFileParse(QString jFile){
             iter.next();
             QMapIterator<QString,QString> iter1(iter.value());
             iter1.next();
-            qDebug() <<"map: "<< iter.key() <<" : "<<iter1.key()<< " : " << iter1.value();
+            //            qDebug() <<"map: "<< iter.key() <<" : "<<iter1.key()<< " : " << iter1.value();
         }
 
 
@@ -311,3 +313,165 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::jsonParseFonk(QString data){
+
+    QJsonDocument jDoc= QJsonDocument::fromJson(data.toUtf8());
+    QJsonObject jObj = jDoc.object();
+    QStringList jObjKeys = jObj.keys();
+    qDebug()<<"file keys: "<<jObjKeys;
+    //    qDebug()<<jObj[jObjKeys[0]].type();
+    QTreeWidgetItem *categories;
+    QMap<QString, QString> categoriList;
+    QMap<int,QMap<QString,QString>> testsList;
+
+    //    QJsonArray array = jObj[jObjKeys[1]].toArray();
+    QJsonArray arrayTests = jObj["tests"].toArray();
+    for(int i=0;i<arrayTests.count();i++){
+        //        qDebug()<<arrayTests.at(i).type();
+        QJsonObject obj=arrayTests[i].toObject();
+        //        qDebug()<<QString("tests[%1]: ").arg(i)<<obj.keys();
+        QStringList objKeys = obj.keys();
+        foreach (QString s, objKeys) {
+            //            qDebug()<<obj[s].type();
+            if(obj[s].isString()){
+                //                                qDebug()<<QString("%1 : ").arg(s)<<obj[s].toString();
+                QMap<QString,QString> temp;
+                temp.insert(obj["cat_id"].toString(),obj["name"].toString());
+                testsList.insert(i,temp);
+            }
+            if(obj[s].isObject()){
+                QJsonObject obj1 = obj[s].toObject();
+                //                                qDebug()<<QString("%1 : ").arg(s)<<obj1.keys();
+                //                QStringList obj1Keys = obj1.keys();
+
+                //                foreach (QString s, obj1Keys) {
+                //                    qDebug()<<obj1[s].type();
+                //                    qDebug()<<QString("%1 : ").arg(s)<<obj1[s].toString();
+                //                }
+            }
+        }
+    }
+
+    //    QMapIterator<int, QMap<QString,QString>> iter(testsList);
+    //    while(iter.hasNext())
+    //    {
+    //        iter.next();
+    //        QMapIterator<QString,QString> iter1(iter.value());
+    //        iter1.next();
+    //        qDebug() <<"map: "<< iter.key() <<" : "<<iter1.key()<< " : " << iter1.value();
+    //    }
+
+    QJsonArray arrayCategories = jObj[jObjKeys[0]].toArray();
+    //    qDebug()<<arrayCategories.count();
+    for(int i=0;i<arrayCategories.count();i++){
+        //        qDebug()<<arrayCategories.at(i);
+        if(arrayCategories.at(i).isObject()){
+            QJsonObject obj = arrayCategories.at(i).toObject();
+            QStringList objKeys = obj.keys();
+            //            qDebug()<<objKeys;
+            categoriList.insert(obj["cat_id"].toString(),obj["name"].toString());
+            categories =  new QTreeWidgetItem(ui->treeWidget);
+            categories->setText(0,obj["name"].toString());
+            categories->setCheckState(0, Qt::Unchecked);
+
+            QStringList s= testControl(obj["cat_id"].toString(),testsList);
+            if(!s.isEmpty()){
+                foreach (QString a, s) {
+                    QTreeWidgetItem *tests =new QTreeWidgetItem(categories);
+                    tests->setText(0,a);
+                    tests->setIcon(0,QIcon(":/testler.png"));
+                    tests->setCheckState(0, Qt::Unchecked);
+                    //                        tests->setBackground(0,colorRed);
+                }
+
+            }
+
+            QTreeWidgetItem *categories1;
+
+            foreach (QString s, objKeys) {
+                //                qDebug()<<obj[s].type();
+                if(obj[s].isString()){
+                    //                    qDebug()<<s<<"--"<<obj[s].toString();
+                }
+                if(obj[s].isArray()){
+                    //                    qDebug()<<obj[s];
+                    QJsonArray array = obj[s].toArray();
+                    for(int i=0;i<array.count();i++){
+                        //                        qDebug()<<array.at(i).type();
+                        if(array.at(i).isObject()){
+                            QJsonObject obj = array.at(i).toObject();
+                            QStringList objKeys = obj.keys();
+                            //                            qDebug()<<s<<"--"<<obj.keys();
+                            categoriList.insert(obj["cat_id"].toString(),obj["name"].toString());
+                            categories1=  new QTreeWidgetItem(categories);
+                            categories1->setText(0,obj["name"].toString());
+                            categories1->setCheckState(0, Qt::Unchecked);
+
+                            QStringList s= testControl(obj["cat_id"].toString(),testsList);
+                            if(!s.isEmpty()){
+                                foreach (QString a, s) {
+                                    QTreeWidgetItem *tests =new QTreeWidgetItem(categories1);
+                                    tests->setText(0,a);
+                                    tests->setIcon(0,QIcon(":/testler.png"));
+                                    tests->setCheckState(0, Qt::Unchecked);
+                                    //                        tests->setBackground(0,colorRed);
+                                }
+
+                            }
+
+                            QTreeWidgetItem *categories2;
+                            foreach (QString s, objKeys) {
+                                //                                qDebug()<<obj[s].type();
+                                if(obj[s].isString()){
+                                    //                                    qDebug()<<obj[s].toString();
+                                }
+                                if(obj[s].isArray()){
+                                    QJsonArray array = obj[s].toArray();
+                                    for(int i=0;i<array.count();i++){
+                                        //                                                                                qDebug()<<array.at(i).type();
+                                        QJsonObject obj = array.at(i).toObject();
+                                        QStringList objKeys = obj.keys();
+                                        //                                        qDebug()<<obj.keys();
+                                        categoriList.insert(obj["cat_id"].toString(),obj["name"].toString());
+                                        categories2=  new QTreeWidgetItem(categories1);
+                                        categories2->setText(0,obj["name"].toString());
+                                        categories2->setCheckState(0, Qt::Unchecked);
+
+                                        QStringList s= testControl(obj["cat_id"].toString(),testsList);
+                                        if(!s.isEmpty()){
+                                            foreach (QString a, s) {
+                                                QTreeWidgetItem *tests =new QTreeWidgetItem(categories2);
+                                                tests->setText(0,a);
+                                                tests->setIcon(0,QIcon(":/testler.png"));
+                                                tests->setCheckState(0, Qt::Unchecked);
+                                                //                        tests->setBackground(0,colorRed);
+                                            }
+                                        }
+                                        foreach (QString s, objKeys) {
+                                            //                                            qDebug()<< obj[s].type();
+                                            if(obj[s].isString()){
+                                                //                                                qDebug()<<obj[s].toString();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+//    QMapIterator<QString,QString> iter(categoriList);
+//    while(iter.hasNext())
+//    {
+//        iter.next();
+//        qDebug() <<"map: "<< iter.key() <<" : " << iter.value();
+//    }
+
+    testMultimap=testsList;
+}
+
+
