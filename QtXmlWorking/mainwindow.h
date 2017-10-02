@@ -27,7 +27,7 @@ public:
     QList<doviz> dovizList;
 
     QUrl url;
-    QString filePath="C:\\Users\\ibrahimethem\\Documents\\qtProject\\QtWebWorking\\today.xml";
+    QString filePath="/home/ieg/Masaüstü/ieggit/Qt/QtXmlWorkingtoday.xml";
 
     void writeFile(QString path,QString text);
     void parseXml();

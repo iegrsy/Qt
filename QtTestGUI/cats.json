@@ -1,0 +1,183 @@
+{  
+   "categories":[  
+      {  
+         "cat_id":"cat01",
+         "name":"Fonksiyonellik Testleri",
+         "obligation":"compulsory",
+         "subcategories":[  
+            {  
+               "cat_id":"cat0101",
+               "name":"Donanım Testleri",
+               "obligation":"optional"
+            },
+            {  
+               "cat_id":"cat0102",
+               "name":"Uygulama Testleri",
+               "obligation":"compulsory",
+               "subcategories":[  
+                  {  
+                     "cat_id":"cat010201",
+                     "name":"Vksystem Testleri",
+                     "obligation":"optional"
+                  },
+                  {  
+                     "cat_id":"cat010202",
+                     "name":"Streamer Testleri",
+                     "obligation":"compulsory"
+                  },
+                  {  
+                     "cat_id":"cat010203",
+                     "name":"Sistem Testleri",
+                     "obligation":"optional"
+                  }
+               ]
+            },
+            {  
+               "cat_id":"cat0103",
+               "name":"Sistem Testleri",
+               "obligation":"compulsory"
+            }
+         ]
+      },
+      {  
+         "cat_id":"cat02",
+         "name":"Performans Testleri",
+         "obligation":"optional",
+         "subcategories":[  
+            {  
+               "cat_id":"cat0201",
+               "name":"Donanım Testleri",
+               "subcategories":[  
+                  {  
+                     "cat_id":"cat020101",
+                     "name":"Ethernet Testleri",
+                     "obligation":"compulsory"
+                  },
+                  {  
+                     "cat_id":"cat020102",
+                     "name":"Depolama Testleri",
+                     "obligation":"optional"
+                  },
+                  {  
+                     "cat_id":"cat020103",
+                     "name":"CPU Testleri",
+                     "obligation":"optional"
+                  }
+               ]
+            },
+            {  
+               "cat_id":"cat0202",
+               "name":"Uygulama Testleri",
+               "obligation":"compulsory",
+               "subcategories":[  
+                  {  
+                     "cat_id":"cat020201",
+                     "name":"Vksystem Testleri",
+                     "obligation":"compulsory"
+                  },
+                  {  
+                     "cat_id":"cat020202",
+                     "name":"Streamer Testleri",
+                     "obligation":"optional"
+                  },
+                  {  
+                     "cat_id":"cat020203",
+                     "name":"Sistem Testleri",
+                     "obligation":"optional"
+                  }
+               ]
+            }
+         ]
+      }
+   ],
+   "tests":[  
+      {  
+         "cat_id":"cat0103",
+         "def":{  
+            "class":"BaseTest"
+         },
+         "name":"Fabrika ayarlarına dönme",
+         "test_id":"tid-25f60f0b"
+      },
+      {  
+         "cat_id":"cat0101",
+         "def":{  
+            "class":"SshTest",
+            "command":"grep pll2_sysclk6 /proc/davinci_clocks | cut -d \" \" -f 10",
+            "expected_output":"432000000"
+         },
+         "name":"CPU frekans testi",
+         "test_id":"tid-831b0304"
+      },
+      {  
+         "cat_id":"cat0101",
+         "def":{  
+            "class":"SshTest",
+            "command":"cat /proc/mtd | wc -l",
+            "expected_output":"7"
+         },
+         "name":"NAND bölümlenme testi",
+         "test_id":"tid-6d498258"
+      },
+      {  
+         "cat_id":"cat0101",
+         "def":{  
+            "class":"SshTest",
+            "command":"cat /proc/cmdline | sed 's/ /\\n/g' | grep -i mem= | cut -d \"=\" -f 2",
+            "expected_output":"40M"
+         },
+         "name":"Sistem hafıza testi",
+         "test_id":"tid-307c465e"
+      },
+      {  
+         "cat_id":"cat0102",
+         "def":{  
+            "class":"CustomSshTest",
+            "command":"ps",
+            "handler":"workingAppsHandler"
+         },
+         "name":"Çalışan uygulamalar testi",
+         "test_id":"tid-970c3cbc"
+      },
+      {  
+         "cat_id":"cat0103",
+         "def":{  
+            "class":"SshTest",
+            "command":"/usr/local/bin/vksystem --version",
+            "expected_output":"1.0.1-00231-g9ee7b14"
+         },
+         "name":"Versiyon doğrulama testi",
+         "test_id":"tid-23704275"
+      },
+      {  
+         "cat_id":"cat0103",
+         "def":{  
+            "class":"SshTest",
+            "command":"/usr/local/bin/dm365_ipstr --version",
+            "expected_output":"2.1.0-00047-g2f20b73"
+         },
+         "name":"Versiyon doğrulama testi",
+         "test_id":"tid-5e499423"
+      },
+      {  
+         "cat_id":"cat0103",
+         "def":{  
+            "class":"SshTest",
+            "command":"uname -r",
+            "expected_output":"2.6.32.17-00023-ge8b6a49"
+         },
+         "name":"Çekirdek versiyon doğrulama testi",
+         "test_id":"tid-2df0995e"
+      },
+      {  
+         "cat_id":"cat0103",
+         "def":{  
+            "class":"SshTest",
+            "command":"strings /dev/mtd1 | grep \"U-Boot SPL\" | head -1",
+            "expected_output":"U-Boot SPL 2014.10-rc2-00138-g18f9bbc (Sep 24 2016 - 12:13:36)"
+         },
+         "name":"Bootloader versiyon doğrulama testi",
+         "test_id":"tid-aa369fab"
+      }
+   ]
+}

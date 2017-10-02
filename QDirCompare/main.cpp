@@ -82,8 +82,8 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    QString fPath1="C:\\Users\\ibrahimethem\\Desktop\\test1";
-    QString fPath2="C:\\Users\\ibrahimethem\\Desktop\\test2";
+    QString fPath1="/home/ieg/Masaüstü/ieggit/MenuExample";
+    QString fPath2="/home/ieg/Masaüstü/ieggit/opencv";
 
     QStringList files1,files2;
 

@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->treeWidget->setHeaderLabel("Categories");
 
 
-    QString jFilePath="C:\\Users\\ibrahimethem\\Desktop\\cats.json";
+    QString jFilePath="/home/ieg/Masaüstü/ieggit/Qt/QtTestGUI/cats.json";
     QFile jFile(jFilePath);
     if(!jFile.open(QIODevice::ReadOnly)){
 
@@ -68,7 +68,7 @@ void MainWindow::jFileParse(QString jFile){
             //qDebug()<<"mapping: "<<obj["cat_id"].toString()<<"--"<<obj["name"].toString();
         }
 
-        QMapIterator<int, QMap<QString,QString>> iter(testMultimap);
+        QMapIterator<int, QMap<QString,QString> > iter(testMultimap);
         while(iter.hasNext())
         {
             iter.next();
@@ -194,11 +194,11 @@ void MainWindow::jFileParse(QString jFile){
     }
 }
 
-QStringList MainWindow::testControl(QString testID,QMap<int,QMap<QString,QString>> testMap){
+QStringList MainWindow::testControl(QString testID,QMap<int,QMap<QString,QString> > testMap){
 
     QStringList result;
 
-    QMapIterator<int, QMap<QString,QString>> iter(testMap);
+    QMapIterator<int, QMap<QString,QString> > iter(testMap);
     while(iter.hasNext())
     {
         iter.next();
@@ -215,11 +215,11 @@ QStringList MainWindow::testControl(QString testID,QMap<int,QMap<QString,QString
     return result;
 }
 
-bool MainWindow::testControl1(QString testName,QMap<int,QMap<QString,QString>> testMap){
+bool MainWindow::testControl1(QString testName,QMap<int,QMap<QString,QString> > testMap){
 
     bool result=false;
 
-    QMapIterator<int, QMap<QString,QString>> iter(testMap);
+    QMapIterator<int, QMap<QString,QString> > iter(testMap);
     while(iter.hasNext())
     {
         iter.next();
@@ -323,7 +323,7 @@ void MainWindow::jsonParseFonk(QString data){
     //    qDebug()<<jObj[jObjKeys[0]].type();
     QTreeWidgetItem *categories;
     QMap<QString, QString> categoriList;
-    QMap<int,QMap<QString,QString>> testsList;
+    QMap<int,QMap<QString,QString> > testsList;
 
     //    QJsonArray array = jObj[jObjKeys[1]].toArray();
     QJsonArray arrayTests = jObj["tests"].toArray();

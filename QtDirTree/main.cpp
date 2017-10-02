@@ -123,8 +123,8 @@ int main(int argc, char *argv[])
 
 //    C:\Users\ibrahimethem\Documents\qtProject\QtDirTree
 
-    QString fPath1="C:\\Users\\ibrahimethem\\Documents\\qtProject\\QtDirTree";
-    QString fPath2="C:\\Users\\ibrahimethem\\Documents\\qtProject";
+    QString fPath1="/home/ieg/Masaüstü/ieggit";
+    QString fPath2="/home/ieg/Masaüstü/ieggit/opencv";
 
     dosyaCompare(fPath1,fPath2);
 
